@@ -45,7 +45,25 @@ class Species(BaseModel):
     def __str__(self):
         return self.name
     
+
+class ObservationManager(models.Manager):   
+
+    def in_public_project(self):
+        return self.get_queryset().filter(projet__is_public=True)
+
+
+class ObservationProjetManager(models.Manager):   
+
+    def public(self):
+        return self.get_queryset().filter(projet__is_public=True)
+    
+    def private(self):
+        return self.get_queryset().filter(projet__is_public=False)
+        
 class Observation(BaseModel):
+    objects = ObservationManager() 
+    projets = ObservationProjetManager()
+    
     species: Species = models.ForeignKey(Species, on_delete=models.PROTECT, related_name="observations") # related_name !!!
     date_observation = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(null=True, blank=True) # Microsoft berk

@@ -16,8 +16,9 @@ def mes_projets(request):
     # Un queryset est un built in list python ET un QuerySet, on peut utiliser les méthodes de l'ORM ou des listes 
     projets: QuerySet[Project] = Project.objects.all() # Les QS sont lazy evaluated, la requête SQL est effectué seulement lorsque django a besoin de la donnée
     projets = projets.filter(observations__species__at_risk=True).order_by('-created_at') # convention order_by('-created_at').first() à la place de  order_by('created_at').last()
-    projets_list = projets.values_list('id', flat=True)
-    print(projets_list)
+    projets_list_id = projets.values_list('id', flat=True)
+
+    # obs_public = Observation.objects.filter(species__name="Ours").public()
 
     # python manage.py shell_plus --print-sql
     # lance un shell et print les requetes sql de l'ORM, pratique pour inspecter perfs (nécessite django_extensions)
@@ -31,7 +32,13 @@ def mes_projets(request):
     # create, exists
     # https://docs.djangoproject.com/fr/5.2/ref/models/querysets/#field-lookups
     # lookups
+    projet = Project.objects.create(title="test", description="test")
 
+    if Project.objects.filter(title="test").exists():
+        print("yes")
+    
+
+    print(projet.__dict__)
 
     # Exemple pour récupérer un seul objet 
     # obs_id = 1
@@ -46,4 +53,5 @@ def mes_projets(request):
     return render(request, "mes_projets.html", context={
         "projet_list": projets
     })
+
 
