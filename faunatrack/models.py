@@ -76,6 +76,12 @@ class Observation(BaseModel):
         return f"{self.species.name} (vu: {self.quantity}) - {self.location}"
 
     class Meta:
+        # ordering = ["-date_observation"]
+        indexes = [
+            models.Index(fields=["species", "location", "date_observation"], name="observation_index"),
+        ]
+
+        unique_together = ["date_observation", "species", "location"] # métiers ! 
         verbose_name = _("Observation")
         verbose_name_plural = _("Observations")
 
@@ -106,6 +112,7 @@ class Project(BaseModel):
         verbose_name_plural = _("Projects")
 
     observations : QuerySet[Observation] # On peut "typé" la relation inverssé pour aider notre IDE
+
 
 class Location(BaseModel):
     name = models.CharField(max_length=255, blank=True)

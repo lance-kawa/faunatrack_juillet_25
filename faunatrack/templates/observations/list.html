@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for object in object_list  %}
+<div>
+    {{ object }}
+    {% include "observations/delete.html" %}
+</div>
+{% endfor %}
+
+{% endblock content %}

@@ -64,3 +64,15 @@ class ObservationCreate(CreateView):
     success_url = reverse_lazy("home")
     form_class = ObservationForm  
     permissions = ["faunatrack.add_observation"] #app_label.add/change/delete/view_{model_name}
+
+
+class ObservationDelete(DeleteView):
+    model = Observation
+    template_name = "observations/delete.html"
+    success_url = reverse_lazy("home")
+
+class ObservationList(ListView):
+    model = Observation
+    queryset = Observation.objects.filter(species__at_risk=True)
+    template_name = "observations/list.html"
+
