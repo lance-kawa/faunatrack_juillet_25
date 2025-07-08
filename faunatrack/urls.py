@@ -15,9 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
-from faunatrack.views import home, mes_projets
+from faunatrack.views import home, mes_projets, ObservationCreate
 
 urlpatterns = [
     path("", home, name="home"),
-    path("projets/", mes_projets, name="mes_projets")
+    path("projets/", mes_projets, name="mes_projets"),
+    path("observations/create/", ObservationCreate.as_view(), name="create_observation"),
 ]

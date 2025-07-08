@@ -21,16 +21,16 @@
                 <a class="text-gray-800 text-xl font-bold" href="{% url 'home' %}"> Home </a>
                 {% if request.user.is_authenticated %}
                     <p>{{ request.user.username }}</p>
-                    {% comment %} <form method="post" action="{% url 'logout' %}">
+                    <form method="post" action="{% url 'logout' %}">
                         {% csrf_token %}
                         <button class="background-red-500" type="submit">Logout</button>
-                    </form> {% endcomment %}
+                    </form> 
                 {% else %} 
-                    {% comment %} <a class="background-blue-500" href="{% url 'login' %}">Se connecter</a> {% endcomment %}
+                     <a class="background-blue-500" href="{% url 'login' %}">Se connecter</a> 
                 {% endif %}
                 <div class="flex gap-4">
                     <a class="text-gray-800 hover:text-gray-600" href="{% url 'admin:index' %}">Admin</a> 
-                    {% comment %} <a class="text-gray-800 hover:text-gray-600" href="{% url 'projets_list' %}">Projets</a>  {% endcomment %}
+                    <a class="text-gray-800 hover:text-gray-600" href="{% url 'create_observation' %}">+ Obs</a> 
                     <!-- Ajoutez d'autres liens de navigation ici -->
                 </div>
             </div>

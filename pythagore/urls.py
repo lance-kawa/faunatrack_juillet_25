@@ -21,7 +21,8 @@ from django.urls import include, path
 # Attention, django rajoute toujours un slash '/' a la fin de l'url (redirection quand appelé depuis un front)
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('faunatrack/', include("faunatrack.urls"))
+    path('', include("faunatrack.urls")),
+    path('auth/', include("django.contrib.auth.urls")),
 ]
 
 

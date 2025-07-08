@@ -1,9 +1,10 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
+from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.utils import timezone
+from faunatrack.forms import ObservationForm
 from faunatrack.models import Observation, Project
 from django.db.models import QuerySet
-
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
 # Create your views here.
 def home(request):
@@ -55,3 +56,11 @@ def mes_projets(request):
     })
 
 
+
+
+class ObservationCreate(CreateView):
+    model = Observation
+    template_name = "observations/create.html"
+    success_url = reverse_lazy("home")
+    form_class = ObservationForm  
+    permissions = ["faunatrack.add_observation"] #app_label.add/change/delete/view_{model_name}
