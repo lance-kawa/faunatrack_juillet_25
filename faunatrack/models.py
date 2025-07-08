@@ -49,26 +49,26 @@ class Species(BaseModel):
 class ObservationManager(models.Manager):   
 
     def in_public_project(self):
-        return self.get_queryset().filter(projet__is_public=True)
+        return self.get_queryset().filter(project__is_public=True)
 
 
 class ObservationProjetManager(models.Manager):   
 
     def public(self):
-        return self.get_queryset().filter(projet__is_public=True)
+        return self.get_queryset().filter(project__is_public=True)
     
     def private(self):
-        return self.get_queryset().filter(projet__is_public=False)
+        return self.get_queryset().filter(project__is_public=False)
         
 class Observation(BaseModel):
     objects = ObservationManager() 
     projets = ObservationProjetManager()
     
     species: Species = models.ForeignKey(Species, on_delete=models.PROTECT, related_name="observations") # related_name !!!
-    date_observation = models.DateTimeField(auto_now_add=True)
+    date_observation = models.DateTimeField()
     notes = models.TextField(null=True, blank=True) # Microsoft berk
     quantity = models.PositiveIntegerField(default=1, blank=True)
-    projet = models.ForeignKey('faunatrack.Project', on_delete=models.PROTECT, related_name="observations")
+    project = models.ForeignKey('faunatrack.Project', on_delete=models.PROTECT, related_name="observations")
     location = models.ForeignKey('faunatrack.Location', on_delete=models.PROTECT, related_name="observations") 
 
 
@@ -91,8 +91,6 @@ class ObservationImage(BaseModel):
         verbose_name_plural = _("ObservationImages")
 
 
-
-
 class Project(BaseModel):
 
     title = models.CharField(max_length=255)
@@ -108,8 +106,6 @@ class Project(BaseModel):
         verbose_name_plural = _("Projects")
 
     observations : QuerySet[Observation] # On peut "typé" la relation inverssé pour aider notre IDE
-
-
 
 class Location(BaseModel):
     name = models.CharField(max_length=255, blank=True)

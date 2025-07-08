@@ -14,7 +14,7 @@ class BaseForm(forms.ModelForm):
 class ObservationForm(BaseForm):
     class Meta:
         model = Observation
-        fields = ['species', 'notes', 'quantity', 'projet', 'location']
+        fields = ['species', 'notes', 'quantity', 'project', 'location']
 
 
 # class ProjetForm(forms.ModelForm):

@@ -12,10 +12,10 @@ class SpeciesAdmin(admin.ModelAdmin):
 @admin.register(Observation)
 class ObservationAdmin(admin.ModelAdmin):
 
-    list_display = ["__str__", 'species', 'projet', 'quantity', 'projet__title']
+    list_display = ["__str__", 'species', 'project', 'quantity', 'project__title']
 
-    list_filter = ["projet", "species__name"]
-    search_fields = ["projet__title", "species__name"]
+    list_filter = ["project", "species__name"]
+    search_fields = ["project__title", "species__name"]
     search_help_text = "Bonjour"
 
 
