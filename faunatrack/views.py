@@ -1,10 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
 from faunatrack.forms import ObservationForm
 from faunatrack.models import Observation, Project
 from django.db.models import QuerySet
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.contrib.auth.models import User
 
 # Create your views here.
 def home(request):
@@ -13,6 +14,10 @@ def home(request):
     })
 
 def mes_projets(request):
+    user: User = request.user
+    print(user)
+    if not user.is_authenticated:
+        return redirect("login")
     # ORM = SDK de votre bdd 
     # Un queryset est un built in list python ET un QuerySet, on peut utiliser les méthodes de l'ORM ou des listes 
     projets: QuerySet[Project] = Project.objects.all() # Les QS sont lazy evaluated, la requête SQL est effectué seulement lorsque django a besoin de la donnée
@@ -39,7 +44,6 @@ def mes_projets(request):
         print("yes")
     
 
-    print(projet.__dict__)
 
     # Exemple pour récupérer un seul objet 
     # obs_id = 1

@@ -23,6 +23,14 @@ class ObservationForm(BaseForm):
             ),
         }
 
+    quantity = forms.IntegerField(  
+        label="Quantité d'animaux observés ce jour à cet emplacement",
+        help_text="Compris entre 1 et 99, default to 1",
+        min_value=1,
+        max_value=100,
+    )
+
+
     class Media:
         css = {
             'all': ('assets/test.css',)
@@ -33,6 +41,7 @@ class ObservationForm(BaseForm):
         if "pas beau" in notes:
             raise forms.ValidationError("Votre observation doit être plus belle que ça voyons !")
         return notes
+
 
 
 

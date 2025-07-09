@@ -1,5 +1,5 @@
 Jour 3: 
-matin: validators, form compostion, templatetags, 4XX template, import-export + ordering + list_editable, modèle Inline, digressions Unfold, email 
+matin: form compostion, templatetags, commands,  4XX template, import-export + ordering + list_editable, modèle Inline, digressions Unfold, email 
 ap:  middleware, RBAC ORM , signaux, tests, permissions
 
 <!-- 
