@@ -27,8 +27,8 @@ class ObservationImageAdmin(admin.ModelAdmin):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ["__str__"]
- 
+    list_display = ["__str__", 'slug']
+    readonly_fields = ["slug"]
     
     actions = ["toogle_public"]
 

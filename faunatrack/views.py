@@ -40,6 +40,9 @@ def mes_projets(request):
     # lookups
     projet = Project.objects.create(title="test", description="test")
 
+    projet.title = "test2"
+    projet.save()
+
     if Project.objects.filter(title="test").exists():
         print("yes")
     

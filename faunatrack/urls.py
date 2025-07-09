@@ -20,6 +20,7 @@ from faunatrack.views import home, mes_projets, ObservationCreate, ObservationLi
 urlpatterns = [
     path("", home, name="home"),
     path("projets/", mes_projets, name="mes_projets"),
+    path("projets/<str:slug>/", mes_projets, name="mes_projets"),
     path("observations/create/", ObservationCreate.as_view(), name="create_observation"),
     path("observations/", ObservationList.as_view(), name="list_obs"),
     path("observations/<int:pk>/delete/", ObservationDelete.as_view(), name="delete_obs"),

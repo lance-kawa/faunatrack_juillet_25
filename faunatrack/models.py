@@ -3,7 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 from django.db.models import QuerySet
 import uuid
-
+from django.utils.text import slugify
+from django.db import transaction
 # 2 approche 
 
 # Courante, Traditionnelle 
@@ -99,9 +100,11 @@ class ObservationImage(BaseModel):
 
 class Project(BaseModel):
 
+
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     is_public = models.BooleanField(default=False)
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return f"{self.title} ({self.is_public})"
@@ -112,6 +115,16 @@ class Project(BaseModel):
         verbose_name_plural = _("Projects")
 
     observations : QuerySet[Observation] # On peut "typé" la relation inverssé pour aider notre IDE
+
+    def save(self, *args, **kwargs):
+        created = self.pk is None # True si le modèle est nouveau
+        if created:
+            self.slug = slugify(self.title)
+        with transaction.atomic():
+            nb_projet_total = Project.objects.count()
+            if nb_projet_total > 5:
+                self.description = "C'est le sixieme projet" 
+        super().save(*args, **kwargs)
 
 
 class Location(BaseModel):
