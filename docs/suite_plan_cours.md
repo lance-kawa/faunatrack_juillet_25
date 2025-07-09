@@ -1,6 +1,6 @@
 Jour 3: 
-matin: form compostion, templatetags,  4XX template, import-export + ordering + list_editable, modèle Inline, digressions Unfold, email 
-ap:  middleware, RBAC ORM , signaux, tests, permissions
+matin:  4XX template, import-export + ordering + list_editable, modèle Inline, digressions Unfold, email 
+ap:  middleware, RBAC ORM, tests, permissions
 
 <!-- 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

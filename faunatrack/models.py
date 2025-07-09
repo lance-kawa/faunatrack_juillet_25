@@ -30,6 +30,7 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True # Modèle Abstrait, ne crée pas de tables en bdd
+
         
 
 
@@ -99,8 +100,6 @@ class ObservationImage(BaseModel):
 
 
 class Project(BaseModel):
-
-
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     is_public = models.BooleanField(default=False)
@@ -122,8 +121,8 @@ class Project(BaseModel):
             self.slug = slugify(self.title)
         with transaction.atomic():
             nb_projet_total = Project.objects.count()
-            if nb_projet_total > 5:
-                self.description = "C'est le sixieme projet" 
+            if nb_projet_total >= 5:
+                self.description = f"C'est le projet numéro {nb_projet_total}" 
         super().save(*args, **kwargs)
 
 
