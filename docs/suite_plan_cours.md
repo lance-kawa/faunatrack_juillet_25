@@ -1,41 +1,16 @@
 Jour 3: 
-matin:  4XX template, import-export + ordering + list_editable, modèle Inline, digressions Unfold, email 
-ap:  middleware, RBAC ORM, tests, permissions
 
-<!-- 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'smtp.example.com'
-# EMAIL_PORT = 587
-# EMAIL_USE_TLS = True
-# EMAIL_HOST_USER = 'your-email@example.com'
-# EMAIL_HOST_PASSWORD = 'your-email-password'
-
-
-from django import template
-
-register = template.Library()
-
-@register.filter(name='add_class')
-def add_class(field, css_class):
-    return field.as_widget(attrs={"class": css_class})
-
-
-class SimpleLoggingMiddleware:
-    def __init__(self, get_response):
-        self.get_response = get_response
-
-    def __call__(self, request):
-        # Code to be executed for each request before
-        # the view (and later middleware) are called.
-        print(f"Request path: {request.path}")
-
-        response = self.get_response(request)
-
-        # Code to be executed for each request/response after
-        # the view is called.
-        return response -->
 
 Jour 4:
 matin: API
 ap: MEP
+
+
+
+# Dashboard
+
+Une espèce est considéré à risque si elle a été observé ( la somme des quantity) moins de 10 fois au total dans les 6 derniers mois et que son nb d'obs est supérieur à 3 ET que elle a été vu dans moins de 5 endroits différents
+
+GET /dashboard LOGGED + Je veux voir la liste des espèces qui appratiennent à mes projet SEULEMENT et si elle à risque + afficher le nb d'observation et l'emplacement ou l'espèce a été le plus de fois
+
+

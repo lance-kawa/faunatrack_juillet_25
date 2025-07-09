@@ -19,7 +19,6 @@ from django.db import transaction
 # Je pousse sur une branche intermédiaire epic/features
 # sur epic/features => makemigrations en équipe
 
-
 # Attention avec Sqlite3, les contraintes ne sont pas appliqués sur la BDD (il faut passer par Django)
 
 class BaseModel(models.Model):
@@ -114,6 +113,7 @@ class Project(BaseModel):
         verbose_name_plural = _("Projects")
 
     observations : QuerySet[Observation] # On peut "typé" la relation inverssé pour aider notre IDE
+    members: QuerySet['ProjectUserAccess'] # ONLY TYPAGE 
 
     def save(self, *args, **kwargs):
         created = self.pk is None # True si le modèle est nouveau
@@ -151,6 +151,7 @@ class ProjectUserAccess(BaseModel):
     roles = models.CharField(default=RolesTextChoices.CONTRIBUTOR, max_length=255, choices=RolesTextChoices.choices)
 
     class Meta:
+        #TODO : indexé le role maybe ?
         verbose_name = _("ProjectUserAccess")
         verbose_name_plural = _("ProjectUserAccesses")
 
@@ -162,7 +163,10 @@ class ProjectUserAccess(BaseModel):
 
 class FaunatrackUser(models.Model):
     user = models.OneToOneField('auth.User', on_delete=models.CASCADE, related_name="faunatrack_user")
+    project_access: QuerySet['ProjectUserAccess']
 
+    def __str__(self):
+        return self.user.username
 
     class Meta:
         verbose_name = _("FaunatrackUser")

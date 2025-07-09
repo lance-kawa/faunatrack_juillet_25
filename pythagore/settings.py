@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-49t3nrnmzi9t9by97x(&r#f9jq!f7vov&7e7m!$ub05g5uqk7s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'faunatrack',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pythagore.middleware.SimpleLoggingMiddleware',
 ]
 
 ROOT_URLCONF = 'pythagore.urls'
@@ -58,7 +60,7 @@ ROOT_URLCONF = 'pythagore.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [  ],
+        'DIRS': [  BASE_DIR / 'pythagore' / 'templates' / 'errors' ], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,6 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+LOGIN_URL = "/auth/login"
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('home')
 
