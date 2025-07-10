@@ -38,9 +38,21 @@ class ObservationViewSet(viewsets.ModelViewSet):
 class ProjectViewSet(viewsets.ModelViewSet):
     # permission_classes = []
     serializer_class = ProjectSerializer
+    
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+
+    #     self.perform_create(serializer)
+    #     return super().create(request, *args, **kwargs)
 
     def get_queryset(self):
         return Project.objects.user_projects(self.request.user)
+
+
+    
+
 
     # je me connexte avec user password 
     # => Je réupère acces + resfresh 
