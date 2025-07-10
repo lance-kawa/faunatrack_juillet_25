@@ -11,13 +11,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         # exclude 
 
 
-
-class ObservationCreateSerializer(serializers.ModelSerializer):
-     class Meta:
-        model = Observation
-        fields = ['species', 'notes', 'quantity', 'location', 'project']
-
-
 class SpeciesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Species
@@ -34,13 +27,20 @@ class LocationSerializer(serializers.ModelSerializer):
         model = Location
         fields = '__all__' 
 
+
+class LocationForObservationWithoutLatitudeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = ['id', 'name']
+
+
 class ObservationSerializer(serializers.ModelSerializer):
     project_nb_obs = serializers.SerializerMethodField()
     species_name = serializers.CharField(source="species.name", read_only=True)
     project_title = serializers.CharField(source="project.title", read_only=True)
     species = SpeciesSerializer()
     project = ProjectSerializer()
-    location = LocationSerializer()
+    location = LocationForObservationWithoutLatitudeSerializer()
 
 
     class Meta:
@@ -52,3 +52,9 @@ class ObservationSerializer(serializers.ModelSerializer):
     # get_ + nom du champ
     def get_project_nb_obs(self, obj: Observation):
         return obj.project.observations.count()
+    
+
+class ObservationCreateSerializer(ObservationSerializer):
+     class Meta:
+        model = Observation
+        fields = ['species', 'notes', 'quantity', 'location', 'project']

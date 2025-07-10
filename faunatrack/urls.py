@@ -15,7 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import include, path
-from faunatrack.api import UserViewSet, ExampleView, ObservationViewSet
+from faunatrack.api import UserViewSet, ExampleView, ObservationViewSet, ProjectViewSet
 from faunatrack.views import home, mes_projets, ObservationCreate, ObservationList, ObservationDelete
 from rest_framework import routers
 from rest_framework_simplejwt.views import (
@@ -26,6 +26,7 @@ from rest_framework_simplejwt.views import (
 router = routers.DefaultRouter()
 router.register("users", UserViewSet, basename="user")
 router.register("observations", ObservationViewSet, basename="observation")
+router.register("projects", ProjectViewSet, basename="projects")
 
 # router.register("observations", UserViewSet, basename="user")
 

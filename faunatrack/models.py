@@ -72,8 +72,6 @@ class Observation(BaseModel):
     project = models.ForeignKey('faunatrack.Project', on_delete=models.PROTECT, related_name="observations")
     location = models.ForeignKey('faunatrack.Location', on_delete=models.PROTECT, related_name="observations") 
 
-
-
     def __str__(self):
         return f"{self.species.name} (vu: {self.quantity}) - {self.location}"
 
@@ -87,6 +85,12 @@ class Observation(BaseModel):
         verbose_name = _("Observation")
         verbose_name_plural = _("Observations")      
 
+
+# class ObservationUserAPI(BaseModel):
+#     observation = models.ForeignKey(Observation, null=True, on_delete=models.SET_NULL, related_name="users") # PO pas content mais formateur content
+#     computed_values = models.JSONField(null=True, blank=True)
+    
+
 class ObservationImage(BaseModel):
     observation = models.ForeignKey(Observation, null=True, on_delete=models.SET_NULL, related_name="images") # PO pas content mais formateur content
     image = models.ImageField(upload_to='images/', null=True, blank=True)
@@ -98,7 +102,16 @@ class ObservationImage(BaseModel):
         verbose_name = _("ObservationImage")
         verbose_name_plural = _("ObservationImages")
 
+
+class ProjectManager(models.Manager):
+
+    def user_projects(self, user):
+        return self.get_queryset().filter(members__user=user.faunatrack_user)
+
 class Project(BaseModel):
+
+    objects = ProjectManager()
+
     title = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     is_public = models.BooleanField(default=False)
@@ -125,6 +138,8 @@ class Project(BaseModel):
             if nb_projet_total >= 5:
                 self.description = f"C'est le projet numéro {nb_projet_total}" 
         super().save(*args, **kwargs)
+
+    
 
 
 class Location(BaseModel):

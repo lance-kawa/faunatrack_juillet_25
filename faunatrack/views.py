@@ -64,9 +64,10 @@ class ObservationList(ListView):
 
 class ProjetList(ListView):
     model = Project
-    queryset = Project.objects.all()
     template_name = "project/list.html"
 
+    def get_queryset(self):
+        return Project.objects.user_projects(self.request.user)
 # from django.db import models
 # class SpeciesList(View):
    

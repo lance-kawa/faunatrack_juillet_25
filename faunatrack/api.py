@@ -4,8 +4,9 @@ from rest_framework.authentication import SessionAuthentication, BasicAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from faunatrack.models import Observation, Species
-from faunatrack.serializers import ObservationCreateSerializer, ObservationSerializer, UserSerializer
+from faunatrack.models import Observation, Project, Species
+from faunatrack.serializers import ObservationCreateSerializer, ObservationSerializer, ProjectSerializer, UserSerializer
+from django.core.management import call_command
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -20,11 +21,8 @@ class UserViewSet(viewsets.ModelViewSet):
 class ExampleView(APIView):
 
     def get(self, request, format=None):
-        content = {
-            'user': str(request.user),  # `django.contrib.auth.User` instance.
-            'auth': str(request.auth),  # None
-        }
-        return Response(content)
+        call_command('populate_db')
+        return Response('Populate db launched !')
     
 
 class ObservationViewSet(viewsets.ModelViewSet):
@@ -35,6 +33,14 @@ class ObservationViewSet(viewsets.ModelViewSet):
         if self.action == 'create': #list #retrieve #update #destroy #partial_update
             return ObservationCreateSerializer
         return ObservationSerializer
+    
+
+class ProjectViewSet(viewsets.ModelViewSet):
+    # permission_classes = []
+    serializer_class = ProjectSerializer
+
+    def get_queryset(self):
+        return Project.objects.user_projects(self.request.user)
 
     # je me connexte avec user password 
     # => Je réupère acces + resfresh 
