@@ -12,9 +12,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 
 
-
-
-
 class ObservationSerializer(serializers.ModelSerializer):
     project_nb_obs = serializers.SerializerMethodField()
     species_name = serializers.CharField(source="species.name")
@@ -22,7 +19,7 @@ class ObservationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Observation
-        fields = ['id', 'project_nb_obs', 'species_name']
+        fields = ['id', 'project_nb_obs', 'species_name', 'species', 'date_observation', 'notes', 'quantity', 'location', 'project']
         # exclude = ["id"]
         # exclude 
     

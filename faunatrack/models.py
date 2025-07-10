@@ -85,10 +85,7 @@ class Observation(BaseModel):
 
         unique_together = ["date_observation", "species", "location"] # métiers ! 
         verbose_name = _("Observation")
-        verbose_name_plural = _("Observations")
-
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)        
+        verbose_name_plural = _("Observations")      
 
 class ObservationImage(BaseModel):
     observation = models.ForeignKey(Observation, null=True, on_delete=models.SET_NULL, related_name="images") # PO pas content mais formateur content
