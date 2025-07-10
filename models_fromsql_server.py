@@ -205,3 +205,7 @@
 #     class Meta:
 #         managed = False
 #         db_table = 'faunatrack_species'
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MjIyNjU1OCwiaWF0IjoxNzUyMTQwMTU4LCJqdGkiOiIxNGRjYWM1ZGQ3YmI0YmI3OTFiOGNiZTVlOWNkZmNkMSIsInVzZXJfaWQiOjF9.YMMfkTt4Yh_f4Jq85KJvW1_yZPUekDoDXX-MIp2wt1o",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUyMTQwNDU4LCJpYXQiOjE3NTIxNDAxNTgsImp0aSI6IjhmZjAwNDUyODE1NjQ2OGM5ZmI0ODBkNjE3MTQ2ZGQzIiwidXNlcl9pZCI6MX0.ZnTzfh3urstd5cNAP5tqnrEkY0WZjlHfUs5c6X6O86I"
+}

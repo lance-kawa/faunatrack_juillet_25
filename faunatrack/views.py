@@ -2,9 +2,9 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.utils import timezone
 from faunatrack.forms import ObservationForm
-from faunatrack.models import FaunatrackUser, Observation, Project, ProjectUserAccess
+from faunatrack.models import FaunatrackUser, Location, Observation, Project, ProjectUserAccess, Species
 from django.db.models import QuerySet
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView, View
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 
@@ -31,6 +31,7 @@ def mes_projets(request):
     })
    
 
+
 class AuthenticateMixin(LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin ):
     def test_func(self):
         # Test fonctionnel
@@ -49,6 +50,7 @@ class ObservationCreate(AuthenticateMixin, CreateView):
     # permissions = ["faunatrack.add_observation"] #app_label.add/change/delete/view_{model_name}
     permission_required = "faunatrack.add_observation"
 
+
 class ObservationDelete(DeleteView):
     model = Observation
     template_name = "observations/delete.html"
@@ -65,6 +67,41 @@ class ProjetList(ListView):
     queryset = Project.objects.all()
     template_name = "project/list.html"
 
+# from django.db import models
+# class SpeciesList(View):
+   
+
+#     def get(self, *args):
+#         return render(self.request, 'species/list.html', context={
+#             'object_list': self.get_queryset()
+#         } )
+
+
+#     def get_queryset(self):
+#         faunatrack_user = self.request.user.faunatrack_user
+#         projects = Project.objects.filter(members__user=faunatrack_user)
+
+#         return  Species.objects.filter(observations__project__in=projects).distinct()
+
+        # projects_ids = Project.objects.filter(members__user=faunatrack_user).values_list('id', flat=True)
+        # species_qs = Species.objects.filter(observations__project_id__in=projects_ids).distinct()
+        # species_qs = Species.objects.filter(observations__project__id__in=projects_ids).distinct()
+        # loc_list = []
+        # for species in species_qs:
+        #     obs_qs: QuerySet[Observation]  = species.observations.all()
+        #     for obs in obs_qs:
+        #         location: Location = obs.location
+        #         total = Observation.objects.filter(location=location).aggregate(total=models.Sum('quantity'))['total']
+        #         loc_list.append(location)
+                
+        # loc_list = set(loc_list)
+
+        
+
+        # POUR chaque species :
+        # Récupérer ses observations, l'emplacement de ces observations
+        # Compter la somme des quantités observé sur un emplacement donné 
+        # retourner le plus haut
 
 
     # bad pattern

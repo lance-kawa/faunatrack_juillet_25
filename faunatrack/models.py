@@ -73,6 +73,7 @@ class Observation(BaseModel):
     location = models.ForeignKey('faunatrack.Location', on_delete=models.PROTECT, related_name="observations") 
 
 
+
     def __str__(self):
         return f"{self.species.name} (vu: {self.quantity}) - {self.location}"
 
@@ -86,6 +87,9 @@ class Observation(BaseModel):
         verbose_name = _("Observation")
         verbose_name_plural = _("Observations")
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)        
+
 class ObservationImage(BaseModel):
     observation = models.ForeignKey(Observation, null=True, on_delete=models.SET_NULL, related_name="images") # PO pas content mais formateur content
     image = models.ImageField(upload_to='images/', null=True, blank=True)
@@ -96,7 +100,6 @@ class ObservationImage(BaseModel):
     class Meta:
         verbose_name = _("ObservationImage")
         verbose_name_plural = _("ObservationImages")
-
 
 class Project(BaseModel):
     title = models.CharField(max_length=255)
@@ -118,6 +121,7 @@ class Project(BaseModel):
     def save(self, *args, **kwargs):
         created = self.pk is None # True si le modèle est nouveau
         if created:
+            
             self.slug = slugify(self.title)
         with transaction.atomic():
             nb_projet_total = Project.objects.count()
@@ -131,6 +135,9 @@ class Location(BaseModel):
     longitude = models.DecimalField(max_digits=9, decimal_places=6)
     lattitude = models.DecimalField(max_digits=9, decimal_places=6)
 
+
+    observations = QuerySet['Observation']
+    
     def __str__(self):
         return self.name
 

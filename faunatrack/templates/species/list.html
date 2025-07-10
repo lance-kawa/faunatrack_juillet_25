@@ -3,7 +3,9 @@
 {% block content %}
 {% for object in object_list  %}
 <div>
-    {{ object }}
+    <p>{{ object }}</p>
+    <p>Danger ? {{ object.at_risk }}</p>
+    <p>Nb obs ? {{ object.observations.count }}</p>
 </div>
 {% endfor %}
 
