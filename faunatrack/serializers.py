@@ -17,13 +17,14 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 class ObservationSerializer(serializers.ModelSerializer):
     project_nb_obs = serializers.SerializerMethodField()
+    species_name = serializers.CharField(source="species.name")
 
 
     class Meta:
         model = Observation
-        fields = ['id', 'project_nb_obs']
+        fields = ['id', 'project_nb_obs', 'species_name']
         # exclude = ["id"]
         # exclude 
     
     def get_project_nb_obs(self, obj: Observation):
-        return obj.is_at_risk
+        return obj.project.observations.count()
