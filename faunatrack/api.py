@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from faunatrack.models import Observation, Species
-from faunatrack.serializers import ObservationSerializer, UserSerializer
+from faunatrack.serializers import ObservationCreateSerializer, ObservationSerializer, UserSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -30,8 +30,11 @@ class ExampleView(APIView):
 class ObservationViewSet(viewsets.ModelViewSet):
     # permission_classes = []
     queryset = Observation.objects.all()
-    serializer_class = ObservationSerializer
 
+    def get_serializer_class(self):
+        if self.action == 'create': #list #retrieve #update #destroy #partial_update
+            return ObservationCreateSerializer
+        return ObservationSerializer
 
     # je me connexte avec user password 
     # => Je réupère acces + resfresh 
